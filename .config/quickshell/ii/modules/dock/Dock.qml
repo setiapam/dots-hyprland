@@ -93,7 +93,7 @@ Scope { // Scope
                             anchors.topMargin: Appearance.sizes.elevationMargin
                             anchors.bottomMargin: Appearance.sizes.hyprlandGapsOut
                             color: Appearance.colors.colLayer0
-                            border.width: 1
+                            border.width: 0
                             border.color: Appearance.m3colors.m3outlineVariant
                             radius: Appearance.rounding.large
                         }
