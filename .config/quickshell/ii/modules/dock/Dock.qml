@@ -134,18 +134,18 @@ Scope { // Scope
                             }
                             DockSeparator {}
                             DockApps { id: dockApps; }
-                            DockSeparator {}
-                            DockButton {
-                                Layout.fillHeight: true
-                                onClicked: Hyprland.dispatch("global quickshell:overviewToggle")
-                                contentItem: MaterialSymbol {
-                                    anchors.fill: parent
-                                    horizontalAlignment: Text.AlignHCenter
-                                    font.pixelSize: parent.width / 2
-                                    text: "apps"
-                                    color: Appearance.colors.colOnLayer0
-                                }
-                            }
+                            // DockSeparator {}
+                            // DockButton {
+                            //     Layout.fillHeight: true
+                            //     onClicked: Hyprland.dispatch("global quickshell:overviewToggle")
+                            //     contentItem: MaterialSymbol {
+                            //         anchors.fill: parent
+                            //         horizontalAlignment: Text.AlignHCenter
+                            //         font.pixelSize: parent.width / 2
+                            //         text: "apps"
+                            //         color: Appearance.colors.colOnLayer0
+                            //     }
+                            // }
                         }
                     }    
                 }
