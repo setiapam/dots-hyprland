@@ -116,12 +116,20 @@ Scope { // Scope
                                     buttonRadius: Appearance.rounding.normal
                                     toggled: root.pinned
                                     onClicked: root.pinned = !root.pinned
-                                    contentItem: MaterialSymbol {
-                                        text: "keep"
-                                        horizontalAlignment: Text.AlignHCenter
-                                        iconSize: Appearance.font.pixelSize.larger
-                                        color: root.pinned ? Appearance.m3colors.m3onPrimary : Appearance.colors.colOnLayer0
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: "\uf303"
+                                        font.family: "FiraCode Nerd Font"
+                                        font.pixelSize: 25
+                                        color: "white"
                                     }
+                                    background: Item {}
+                                    // contentItem: MaterialSymbol {
+                                    //     text: "keep"
+                                    //     horizontalAlignment: Text.AlignHCenter
+                                    //     iconSize: Appearance.font.pixelSize.larger
+                                    //     color: root.pinned ? Appearance.m3colors.m3onPrimary : Appearance.colors.colOnLayer0
+                                    // }
                                 }
                             }
                             DockSeparator {}
