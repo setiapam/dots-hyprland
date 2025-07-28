@@ -104,7 +104,7 @@ Scope { // Scope
                             anchors.bottom: parent.bottom
                             anchors.horizontalCenter: parent.horizontalCenter
                             spacing: 3
-                            property real padding: 5
+                            property real padding: 2
 
                             VerticalButtonGroup {
                                 Layout.topMargin: Appearance.sizes.hyprlandGapsOut // why does this work
@@ -133,7 +133,10 @@ Scope { // Scope
                                 }
                             }
                             DockSeparator {}
-                            DockApps { id: dockApps; }
+                            DockApps { 
+                                id: dockApps
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
                             // DockSeparator {}
                             // DockButton {
                             //     Layout.fillHeight: true
