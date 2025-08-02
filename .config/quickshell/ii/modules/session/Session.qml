@@ -80,55 +80,21 @@ Scope {
             GlobalStates.sessionOpen = false
         }
 
-        exclusionMode: ExclusionMode.Ignore
-        WlrLayershell.namespace: "quickshell:session"
-        WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
-        color: ColorUtils.transparentize(Appearance.m3colors.m3background, 0.3)
-
-        anchors {
-            top: true
-            left: true
-            right: true
-        }
-
-        implicitWidth: root.focusedScreen?.width ?? 0
-        implicitHeight: root.focusedScreen?.height ?? 0
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: sessionRoot.hide()
-        }
-
-        ColumnLayout { // Content column
-            id: contentColumn
-            anchors.centerIn: parent
-            spacing: 15
-
-            Keys.onPressed: (event) => {
-                if (event.key === Qt.Key_Escape) {
-                    sessionRoot.hide();
+        Connections {
+            target: GlobalStates
+            function onScreenLockedChanged() {
+                if (GlobalStates.screenLocked) {
+                    GlobalStates.sessionOpen = false;
                 }
             }
 
-            ColumnLayout {
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 0
-                StyledText { // Title
-                    Layout.alignment: Qt.AlignHCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.family: Appearance.font.family.title
-                    font.pixelSize: Appearance.font.pixelSize.title
-                    font.weight: Font.DemiBold
-                    text: Translation.tr("Session")
-                }
-
-                StyledText { // Small instruction
-                    Layout.alignment: Qt.AlignHCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: Appearance.font.pixelSize.normal
-                    text: Translation.tr("Arrow keys to navigate, Enter to select\nEsc or click anywhere to cancel")
-                }
+        sourceComponent: PanelWindow { // Session menu
+            id: sessionRoot
+            visible: sessionLoader.active
+            property string subtitle
+            
+            function hide() {
+                GlobalStates.sessionOpen = false;
             }
 
             GridLayout {
