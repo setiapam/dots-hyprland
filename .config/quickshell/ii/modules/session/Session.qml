@@ -208,7 +208,7 @@ Scope {
                         id: sessionShutdown
                         buttonIcon: "power_settings_new"
                         buttonText: Translation.tr("Shutdown")
-                        onClicked:  { root.closeAllWindows(); Quickshell.execDetached(["bash", "-c", `systemctl poweroff || loginctl poweroff`]); sessionRoot.hide() }
+                        onClicked:  { root.closeAllWindows(); Quickshell.execDetached(["bash", "-c", `systemctl poweroff --no-wall || loginctl poweroff`]); sessionRoot.hide() }
                         onFocusChanged: { if (focus) sessionRoot.subtitle = buttonText }
                         KeyNavigation.left: sessionHibernate
                         KeyNavigation.right: sessionReboot
@@ -218,7 +218,7 @@ Scope {
                         id: sessionReboot
                         buttonIcon: "restart_alt"
                         buttonText: Translation.tr("Reboot")
-                        onClicked:  { root.closeAllWindows(); Quickshell.execDetached(["bash", "-c", `reboot || loginctl reboot`]); sessionRoot.hide() }
+                        onClicked:  { root.closeAllWindows(); Quickshell.execDetached(["bash", "-c", `reboot --no-wall || loginctl reboot`]); sessionRoot.hide() }
                         onFocusChanged: { if (focus) sessionRoot.subtitle = buttonText }
                         KeyNavigation.left: sessionShutdown
                         KeyNavigation.right: sessionFirmwareReboot
