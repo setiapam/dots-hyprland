@@ -32,31 +32,52 @@ Item {
 
     RowLayout {
         id: resourceRowLayout
-        spacing: 4
+        spacing: 2
         x: shown ? 0 : -resourceRowLayout.width
 
-        CircularProgress {
+        ClippedFilledCircularProgress {
+            id: resourceCircProg
             Layout.alignment: Qt.AlignVCenter
-            lineWidth: 2
+            lineWidth: Appearance.rounding.unsharpen
             value: percentage
-            implicitSize: 26
-            colSecondary: Appearance.colors.colSecondaryContainer
-            colPrimary: Appearance.m3colors.m3onSecondaryContainer
+            implicitSize: 22
+            colPrimary: Appearance.colors.colOnSecondaryContainer
             enableAnimation: false
 
-            MaterialSymbol {
+            Item {
                 anchors.centerIn: parent
-                fill: 1
-                text: iconName
-                iconSize: Appearance.font.pixelSize.large
-                color: Appearance.m3colors.m3onSecondaryContainer
+                width: resourceCircProg.implicitSize
+                height: resourceCircProg.implicitSize
+                
+                MaterialSymbol {
+                    anchors.centerIn: parent
+                    font.weight: Font.DemiBold
+                    fill: 1
+                    text: iconName
+                    iconSize: Appearance.font.pixelSize.normal
+                    color: Appearance.m3colors.m3onSecondaryContainer
+                }
             }
         }
 
-        StyledText {
+        Item {
             Layout.alignment: Qt.AlignVCenter
-            color: Appearance.colors.colOnLayer1
-            text: `${Math.round(percentage * 100)}`
+            implicitWidth: fullPercentageTextMetrics.width
+            implicitHeight: percentageText.implicitHeight
+
+            TextMetrics {
+                id: fullPercentageTextMetrics
+                text: "100"
+                font.pixelSize: Appearance.font.pixelSize.small
+            }
+
+            StyledText {
+                id: percentageText
+                anchors.centerIn: parent
+                color: Appearance.colors.colOnLayer1
+                font.pixelSize: Appearance.font.pixelSize.small
+                text: `${Math.round(percentage * 100).toString()}`
+            }
         }
 
         Behavior on x {
