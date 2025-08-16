@@ -1,10 +1,6 @@
-import "./weather"
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Io
-import Quickshell.Wayland
-import Quickshell.Hyprland
 import Quickshell.Services.UPower
 import qs
 import qs.services
@@ -150,9 +146,14 @@ Item { // Bar content region
         anchors.centerIn: parent
         spacing: 4
 
-        VerticalBarGroup {
+        Bar.BarGroup {
+            vertical: true
             padding: 8
             Resources {
+                Layout.fillWidth: true
+                Layout.fillHeight: false
+            }
+            VerticalMedia {
                 Layout.fillWidth: true
                 Layout.fillHeight: false
             }
@@ -162,8 +163,9 @@ Item { // Bar content region
             visible: Config.options?.bar.borderless
         }
 
-        VerticalBarGroup {
+        Bar.BarGroup {
             id: middleCenterGroup
+            vertical: true
             padding: 6
             Layout.fillHeight: true
 
@@ -187,7 +189,8 @@ Item { // Bar content region
             visible: Config.options?.bar.borderless
         }
 
-        VerticalBarGroup {
+        Bar.BarGroup {
+            vertical: true
             padding: 8
             
             VerticalClockWidget {
@@ -196,6 +199,7 @@ Item { // Bar content region
             }
 
             BatteryIndicator {
+                visible: UPower.displayDevice.isLaptopBattery
                 Layout.fillWidth: true
                 Layout.fillHeight: false
             }
