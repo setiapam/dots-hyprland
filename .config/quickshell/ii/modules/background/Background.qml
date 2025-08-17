@@ -213,7 +213,7 @@ Variants {
             ColumnLayout {
                 id: clockColumn
                 anchors.centerIn: parent
-                spacing: 0
+                spacing: 6
 
                 StyledText {
                     Layout.fillWidth: true
@@ -243,6 +243,7 @@ Variants {
                     text: DateTime.date
                 }
                 StyledText {
+                    Layout.fillWidth: true
                     horizontalAlignment: bgRoot.textHorizontalAlignment
                     font {
                         family: Appearance.font.family.expressive
