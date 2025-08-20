@@ -133,24 +133,12 @@ Scope { // Scope
                                 id: dockApps
                                 buttonPadding: dockRow.padding
                             }
-                            DockSeparator {}
-                            DockButton {
-                                Layout.fillHeight: true
-                                onClicked: GlobalStates.overviewOpen = !GlobalStates.overviewOpen
-                                topInset: Appearance.sizes.hyprlandGapsOut + dockRow.padding
-                                bottomInset: Appearance.sizes.hyprlandGapsOut + dockRow.padding
-                                contentItem: MaterialSymbol {
-                                    anchors.fill: parent
-                                    horizontalAlignment: Text.AlignHCenter
-                                    font.pixelSize: parent.width / 2
-                                    text: "apps"
-                                    color: Appearance.colors.colOnLayer0
-                                }
-                            }
                             // DockSeparator {}
                             // DockButton {
                             //     Layout.fillHeight: true
-                            //     onClicked: Hyprland.dispatch("global quickshell:overviewToggle")
+                            //     onClicked: GlobalStates.overviewOpen = !GlobalStates.overviewOpen
+                            //     topInset: Appearance.sizes.hyprlandGapsOut + dockRow.padding
+                            //     bottomInset: Appearance.sizes.hyprlandGapsOut + dockRow.padding
                             //     contentItem: MaterialSymbol {
                             //         anchors.fill: parent
                             //         horizontalAlignment: Text.AlignHCenter
