@@ -103,13 +103,13 @@ Singleton {
                     // Prevent sudden bangs
                     property bool enable: true
                     property real maxAllowedIncrease: 10
-                    property real maxAllowed: 90 // Realistically should already provide some protection when it's 99...
+                    property real maxAllowed: 99
                 }
             }
 
             property JsonObject apps: JsonObject {
                 property string bluetooth: "kcmshell6 kcm_bluetooth"
-                property string network: "plasmawindowed org.kde.plasma.networkmanagement"
+                property string network: "kitty -1 fish -c nmtui"
                 property string networkEthernet: "kcmshell6 kcm_networkmanagement"
                 property string taskManager: "plasma-systemmonitor --page-name Processes"
                 property string terminal: "kitty -1" // This is only for shell actions
