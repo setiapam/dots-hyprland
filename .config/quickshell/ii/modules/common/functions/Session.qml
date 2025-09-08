@@ -35,12 +35,12 @@ Singleton {
 
     function poweroff() {
         closeAllWindows();
-        Quickshell.execDetached(["bash", "-c", `systemctl poweroff || loginctl poweroff`]);
+        Quickshell.execDetached(["bash", "-c", `systemctl poweroff --no-wall || loginctl poweroff --no-wall`]);
     }
 
     function reboot() {
         closeAllWindows();
-        Quickshell.execDetached(["bash", "-c", `reboot || loginctl reboot`]);
+        Quickshell.execDetached(["bash", "-c", `systemctl reboot --no-wall || loginctl reboot --no-wall`]);
     }
 
     function rebootToFirmware() {
