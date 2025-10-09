@@ -1,0 +1,31 @@
+name: Comment on Discussion When dist-arch/ Changes
+
+on:
+  push:
+    paths:
+      - 'dist-arch/**'
+
+jobs:
+  comment_on_discussion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create comment on discussion #2140
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # https://docs.github.com/en/graphql/reference/mutations#adddiscussioncomment
+        run: |
+          gh api graphql -f query='
+            mutation {
+              addDiscussionComment(
+                input: {
+                  discussionId: "2140",
+                  body: "dist-arch/ directory has changed in commit ${{ github.sha }} by ${{ github.actor }}."
+                }
+              ) {
+                comment {
+                  id
+                  body
+                }
+              }
+            }
+          '
