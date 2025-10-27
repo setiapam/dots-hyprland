@@ -1,5 +1,6 @@
 # This script is meant to be sourced.
 # It's not for directly running.
+printf "${STY_CYAN}[$0]: 3. Copying config files\n${STY_RST}"
 
 # shellcheck shell=bash
 
@@ -53,15 +54,30 @@ function ask_backup_configs(){
   showfun backup_clashing_targets
   printf "${STY_RED}"
   printf "Would you like to backup clashing dirs/files under \"$XDG_CONFIG_HOME\" and \"$XDG_DATA_HOME\" to \"$BACKUP_DIR\"?"
-  read -p "[y/N] " backup_confirm
-  case $backup_confirm in
-    [yY][eE][sS]|[yY]) 
-      backup_clashing_targets dots/.config $XDG_CONFIG_HOME "${BACKUP_DIR}/.config"
-      backup_clashing_targets dots/.local/share $XDG_DATA_HOME "${BACKUP_DIR}/.local/share"
-      ;;
-    *) echo "Skipping backup..." ;;
-  esac
   printf "${STY_RST}"
+  while true;do
+    echo "  y = Yes, backup"
+    echo "  n = No, skip to next"
+    local p; read -p "====> " p
+    case $p in
+      [yY]) echo -e "${STY_BLUE}OK, doing backup...${STY_RST}" ;local backup=true;break ;;
+      [nN]) echo -e "${STY_BLUE}Alright, skipping...${STY_RST}" ;local backup=false;break ;;
+      *) echo -e "${STY_RED}Please enter [y/n].${STY_RST}";;
+     esac
+  done
+  if $backup;then
+    backup_clashing_targets dots/.config $XDG_CONFIG_HOME "${BACKUP_DIR}/.config"
+    backup_clashing_targets dots/.local/share $XDG_DATA_HOME "${BACKUP_DIR}/.local/share"
+    printf "${STY_BLUE}Backup into \"${BACKUP_DIR}\" finished.${STY_RST}\n"
+  fi
+}
+function auto_backup_configs(){
+  # Backup when $BACKUP_DIR does not exist
+  if [[ ! -d "$BACKUP_DIR" ]]; then
+    backup_clashing_targets dots/.config $XDG_CONFIG_HOME "${BACKUP_DIR}/.config"
+    backup_clashing_targets dots/.local/share $XDG_DATA_HOME "${BACKUP_DIR}/.local/share"
+    printf "${STY_BLUE}Backup into \"${BACKUP_DIR}\" finished.${STY_RST}\n"
+  fi
 }
 
 #####################################################################################
@@ -69,10 +85,12 @@ function ask_backup_configs(){
 # In case some dirs does not exists
 v mkdir -p $XDG_BIN_HOME $XDG_CACHE_HOME $XDG_CONFIG_HOME $XDG_DATA_HOME
 
-case $ask in
-  false) sleep 0 ;;
-  *) ask_backup_configs ;;
-esac
+if [[ ! "${SKIP_BACKUP}" == true ]]; then
+  case $ask in
+    false) auto_backup_configs ;;
+    *) ask_backup_configs ;;
+  esac
+fi
 
 # TODO: A better method for users to choose their customization,
 # for example some users may prefer ZSH over FISH, and foot over kitty.
@@ -101,6 +119,7 @@ esac
 case $SKIP_QUICKSHELL in
   true) sleep 0;;
   *)
+     # Should overwriting the whole directory not only ~/.config/quickshell/ii/ cuz https://github.com/end-4/dots-hyprland/issues/2294#issuecomment-3448671064
     warning_rsync; v rsync -av --delete dots/.config/quickshell/ "$XDG_CONFIG_HOME"/quickshell/
     ;;
 esac
