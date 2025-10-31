@@ -1,7 +1,7 @@
 # Handle args for subcmd: install
 # shellcheck shell=bash
 showhelp(){
-echo -e "Syntax: $0 install [OPTIONS]...
+printf "Syntax: $0 install [OPTIONS]...
 
 Idempotent installation for dotfiles.
 
@@ -19,12 +19,21 @@ Options for install:
       --skip-quickshell     Skip installing the config for Quickshell
       --skip-hyprland       Skip installing the config for Hyprland
       --skip-fish           Skip installing the config for Fish
+      --skip-fontconfig     Skip installing the config for fontconfig
       --skip-miscconf       Skip copying the dirs and files to \".configs\" except for
                             Quickshell, Fish and Hyprland
-      --exp-files           Use experimental script for the third step copying files
-      --fontset <set>       (Unavailable yet) Use a set of pre-defined font and config
-      --via-nix             (Unavailable yet) Use Nix to install dependencies
-"
+      --core                Alias of --skip-{plasmaintg,fish,miscconf,fontconfig}
+      --fontset <set>       Use a set of pre-defined font and config (currently only fontconfig).
+                            Possible values of <set>: $(ls -A ${REPO_ROOT}/dots-extra/fontsets)
+${STY_CYAN}
+New features (experimental):
+      --exp-files           Use yaml-based config for the third step copying files.
+                            This feature is ${STY_YELLOW}still on early stage${STY_CYAN}, feedback and contribution welcomed,
+                            see https://github.com/end-4/dots-hyprland/issues/2137 for details.
+      --via-nix             Use Nix and Home-manager to install dependencies.
+                            This feature is ${STY_RED}working in progress${STY_CYAN}. Contribution is welcomed,
+                            see https://github.com/end-4/dots-hyprland/issues/1061 for details.
+${STY_RST}"
 }
 
 cleancache(){
@@ -34,7 +43,7 @@ cleancache(){
 # `man getopt` to see more
 para=$(getopt \
   -o hfk:cs \
-  -l help,force,fontset:,clean,skip-allgreeting,skip-alldeps,skip-allsetups,skip-allfiles,skip-sysupdate,skip-plasmaintg,skip-backup,skip-quickshell,skip-fish,skip-hyprland,skip-miscconf,exp-files,via-nix \
+  -l help,force,fontset:,clean,skip-allgreeting,skip-alldeps,skip-allsetups,skip-allfiles,skip-sysupdate,skip-plasmaintg,skip-backup,skip-quickshell,skip-fish,skip-hyprland,skip-fontconfig,skip-miscconf,core,exp-files,via-nix \
   -n "$0" -- "$@")
 [ $? != 0 ] && echo "$0: Error when getopt, please recheck parameters." && exit 1
 #####################################################################################
@@ -69,16 +78,18 @@ while true ; do
     --skip-hyprland) SKIP_HYPRLAND=true;shift;;
     --skip-fish) SKIP_FISH=true;shift;;
     --skip-quickshell) SKIP_QUICKSHELL=true;shift;;
+    --skip-fontconfig) SKIP_FONTCONFIG=true;shift;;
     --skip-miscconf) SKIP_MISCCONF=true;shift;;
+    --core) SKIP_PLASMAINTG=true;SKIP_FISH=true;SKIP_FONTCONFIG=true;SKIP_MISCCONF=true;shift;;
     --exp-files) EXPERIMENTAL_FILES_SCRIPT=true;shift;;
     --via-nix) INSTALL_VIA_NIX=true;shift;;
     
     ## Ones with parameter
     --fontset)
-    case $2 in
-      "default"|"zh-CN"|"vi") fontset="$2";;
-      *) echo -e "Wrong argument for $1.";exit 1;;
-    esac;echo "The fontset is ${fontset}.";shift 2;;
+    if [[ -d "${REPO_ROOT}/dots-extra/fontsets/$2" ]];
+      then echo "Using fontset \"$2\".";FONTSET_DIR_NAME="$2";shift 2
+      else echo "Wrong argument for $1.";exit 1
+    fi;;
 
     ## Ending
     --) break ;;

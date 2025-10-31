@@ -15,7 +15,6 @@ StyledFlickable {
     Behavior on contentX {
         animation: Appearance.animation.elementMoveEnter.numberAnimation.createObject(this)
     }
-    rightMargin: 14
     Row {
         id: dotsRow
         anchors {
@@ -75,7 +74,7 @@ StyledFlickable {
                         NumberAnimation {
                             target: materialShape
                             properties: "implicitSize"
-                            to: 34
+                            to: 18
                             easing.type: Easing.BezierSpline
                             easing.bezierCurve: Appearance.animationCurves.expressiveFastSpatial
                         }

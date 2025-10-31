@@ -317,9 +317,9 @@ Singleton {
         }
 
         property QtObject clickBounce: QtObject {
-            property int duration: 200
+            property int duration: 400
             property int type: Easing.BezierSpline
-            property list<real> bezierCurve: animationCurves.expressiveFastSpatial
+            property list<real> bezierCurve: animationCurves.expressiveDefaultSpatial
             property int velocity: 850
             property Component numberAnimation: Component { NumberAnimation {
                     duration: root.animation.clickBounce.duration
@@ -357,8 +357,8 @@ Singleton {
         property real mediaControlsHeight: 160
         property real notificationPopupWidth: 410
         property real osdWidth: 180
-        property real searchWidthCollapsed: 260
-        property real searchWidth: 450
+        property real searchWidthCollapsed: 210
+        property real searchWidth: 360
         property real sidebarWidth: 460
         property real sidebarWidthExtended: 750
         property real baseVerticalBarWidth: 46
