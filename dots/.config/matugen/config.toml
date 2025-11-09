@@ -32,3 +32,12 @@ output_path = '~/.local/state/quickshell/user/generated/color.txt'
 [templates.wallpaper]
 input_path = '~/.config/matugen/templates/wallpaper.txt'
 output_path = '~/.local/state/quickshell/user/generated/wallpaper/path.txt'
+
+[templates.discord]
+input_path = '~/.config/matugen/templates/midnight-discord.css'
+output_path = '~/.config/vesktop/themes/midnight.theme.css'
+
+[templates.iisddmtheme]
+input_path = '~/.config/ii-sddm-theme/SddmColors.qml'
+output_path = '~/.config/ii-sddm-theme/Colors.qml'
+post_hook = 'python3 ~/.config/ii-sddm-theme/generate_settings.py && sudo ~/.config/ii-sddm-theme/sddm-theme-apply.sh &'
